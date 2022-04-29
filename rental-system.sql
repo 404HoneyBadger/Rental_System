@@ -59,14 +59,14 @@ and start_date between '2012-01-03' and '2012-01-18';
 -- 8. List the vehicles (registration number, brand and description) available for rental (not rented out) on '2012-01-10'
 drop view date_available;
 
-select rental_records.veh_reg_no, brand, vehicles.desc
+select distinct rental_records.veh_reg_no, brand, vehicles.desc
 from vehicles
 left join rental_records
 on vehicles.veh_reg_no=rental_records.veh_reg_no
 and not (start_date<'2012-01-10' and end_date>'2012-01-10');
 
 -- 9. Similarly, list the vehicles available for rental for the period from '2012-01-03' to '2012-01-18'.
-select rental_records.veh_reg_no, brand, vehicles.desc
+select distinct rental_records.veh_reg_no, brand, vehicles.desc
 from vehicles
 left join rental_records
 on vehicles.veh_reg_no=rental_records.veh_reg_no
@@ -75,7 +75,7 @@ and not ((start_date between '2012-01-03' AND '2012-01-18')
  OR (start_date < '2012-01-03' AND end_date > '2012-01-18'));
 
 -- 10. Similarly, list the vehicles available for rental from today for 10 days
-SELECT r.veh_reg_no, v.brand, v.desc
+SELECT distinct r.veh_reg_no, v.brand, v.desc
  FROM vehicles AS v LEFT JOIN rental_records AS r 
  ON  v.veh_reg_no = r.veh_reg_no
  AND NOT ((start_date between curdate() AND (date_add(curdate(), interval 10 day)))
